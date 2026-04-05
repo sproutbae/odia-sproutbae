@@ -1,0 +1,268 @@
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-motif" aria-hidden="true">ଓ</div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <p class="hero-eyebrow">ଶ୍ରୀ ଜଗନ୍ନାଥଙ୍କ ଆଶୀର୍ବାଦ · Blessed by Lord Jagannath</p>
+      <h1 class="hero-title">
+        Tastes that carry<br><em>ଘର</em> home to you
+      </h1>
+      <p class="hero-desc">
+        Traditional Odia snacks, sweets & pithas — made by artisan families in the heartland of Odisha, shipped to your door anywhere in the world.
+      </p>
+      <div class="hero-actions">
+        <a href="/shop" class="btn-primary">Shop Now · ଏବେ କିଣନ୍ତୁ</a>
+        <a href="/shop?category=hamper" class="btn-outline">Gift Boxes →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-wheel">
+        <div class="wheel-center">🙏<br><span>Prasad</span></div>
+        <div class="wheel-item wi-1">🍯<br>ରସଗୋଲା</div>
+        <div class="wheel-item wi-2">🥮<br>ପିଠା</div>
+        <div class="wheel-item wi-3">🍮<br>ଛେନା ପୋଡ଼</div>
+        <div class="wheel-item wi-4">🌾<br>ଚୁଡ଼ା</div>
+        <div class="wheel-item wi-5">🫙<br>ଖଟ୍ଟା</div>
+        <div class="wheel-item wi-6">🎁<br>ଉପହାର</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JAGANNATH FEATURE BAND -->
+<section class="jagannath-band">
+  <div class="jagannath-inner">
+    <div class="jagannath-emblem">
+      <div class="sudarshana-chakra">
+        <div class="chakra-inner">🕉️</div>
+        <div class="chakra-ring"></div>
+        <div class="chakra-spokes">
+          <div class="spoke" style="transform: rotate(0deg)"></div>
+          <div class="spoke" style="transform: rotate(45deg)"></div>
+          <div class="spoke" style="transform: rotate(90deg)"></div>
+          <div class="spoke" style="transform: rotate(135deg)"></div>
+          <div class="spoke" style="transform: rotate(180deg)"></div>
+          <div class="spoke" style="transform: rotate(225deg)"></div>
+          <div class="spoke" style="transform: rotate(270deg)"></div>
+          <div class="spoke" style="transform: rotate(315deg)"></div>
+        </div>
+      </div>
+    </div>
+    <div class="jagannath-text">
+      <p class="jag-eyebrow">ଶ୍ରୀ ଜଗନ୍ନାଥ · Jagat Ka Nath</p>
+      <h2 class="jag-title">Every morsel is <em>Mahaprasad</em></h2>
+      <p class="jag-body">
+        Lord Jagannath — <strong>ଜଗନ୍ନାଥ</strong>, the Lord of the Universe — resides in the sacred Puri temple on Odisha's eastern coast. His daily offering, the <strong>Chappan Bhog (ଛପ୍ପନ ଭୋଗ)</strong> — 56 divine dishes — is the inspiration behind Odia cuisine. Every item in our store traces its roots to this blessed tradition.
+      </p>
+      <div class="jag-tags">
+        <span class="jag-tag">🛕 Puri Temple Heritage</span>
+        <span class="jag-tag">🙏 Chappan Bhog Inspired</span>
+        <span class="jag-tag">✨ Mahaprasad Tradition</span>
+        <span class="jag-tag">🎡 Rath Yatra Culture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">🌿 No preservatives · ସ୍ୱଚ୍ଛ</div>
+  <div class="trust-item">👨‍👩‍👧 40+ artisan families</div>
+  <div class="trust-item">✈️ Ships worldwide · ବିଶ୍ୱ</div>
+  <div class="trust-item">🛡️ 7-day freshness guarantee</div>
+  <div class="trust-item">🙏 Jagannath blessed</div>
+</div>
+
+<!-- BESTSELLERS -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Priya Khana · ପ୍ରିୟ ଖାଣା</p>
+      <h2 class="section-title">Bestsellers</h2>
+    </div>
+    <a href="/shop" class="section-link">View All · ସବୁ ଦେଖନ୍ତୁ →</a>
+  </div>
+  <div class="product-grid">
+    {{#each bestsellers}}
+    <div class="product-card">
+      <div class="product-img" style="background: {{this.bgColor}}">
+        <span class="product-emoji">{{this.emoji}}</span>
+        {{#if (eq (lookup this.tags 0) 'bestseller')}}
+        <span class="product-badge">Bestseller</span>
+        {{/if}}
+      </div>
+      <div class="product-body">
+        <p class="product-category">{{this.categoryLabel}}</p>
+        <h3 class="product-name">{{this.name}}</h3>
+        <p class="product-odia-name">{{this.odiaName}}</p>
+        <p class="product-desc">{{this.desc}}</p>
+        <p class="product-story">🙏 {{this.story}}</p>
+        <div class="product-footer">
+          <div>
+            <span class="product-price">₹{{this.price}}</span>
+            <span class="product-unit">/ {{this.unit}}</span>
+          </div>
+          <button class="add-btn"
+            data-id="{{this.id}}"
+            data-name="{{this.name}}"
+            data-price="{{this.price}}">
+            + Add · ଯୋଡ଼ନ୍ତୁ
+          </button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</section>
+
+<!-- CULTURE TRIPTYCH -->
+<section class="culture-triptych">
+  <div class="triptych-header">
+    <p class="section-eyebrow">Odia Sanskriti · ଓଡ଼ିଆ ସଂସ୍କୃତି</p>
+    <h2 class="section-title">The Soul of Odisha</h2>
+  </div>
+  <div class="triptych-grid">
+
+    <!-- DANCE -->
+    <div class="triptych-card dance-card">
+      <div class="triptych-art dance-art">
+        <div class="dance-figure">
+          <div class="dancer-body">💃</div>
+          <div class="dancer-shadow"></div>
+        </div>
+        <div class="art-pattern dance-pattern" aria-hidden="true">
+          <span>ଓ</span><span>ଡ</span><span>ି</span><span>ଶ</span><span>ୀ</span>
+        </div>
+      </div>
+      <div class="triptych-content">
+        <h3 class="triptych-title">Odissi Nrutya<br><span class="odia-script">ଓଡ଼ିଶୀ ନୃତ୍ୟ</span></h3>
+        <p class="triptych-desc">One of India's eight classical dance forms, Odissi was performed by devadasis in the Jagannath temple. Its fluid tribhangi posture and lyrical abhinaya tell stories of Lord Jagannath's divine love.</p>
+        <div class="triptych-tags">
+          <span>Temple origin</span><span>UNESCO heritage</span><span>Tribhangi posture</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOD -->
+    <div class="triptych-card food-card">
+      <div class="triptych-art food-art">
+        <div class="thali-circle">
+          <div class="thali-item t1">🍚</div>
+          <div class="thali-item t2">🍛</div>
+          <div class="thali-item t3">🫙</div>
+          <div class="thali-item t4">🍮</div>
+          <div class="thali-item t5">🌿</div>
+          <div class="thali-center">ଥାଳି</div>
+        </div>
+      </div>
+      <div class="triptych-content">
+        <h3 class="triptych-title">Odia Thali<br><span class="odia-script">ଓଡ଼ିଆ ଥାଳି</span></h3>
+        <p class="triptych-desc">The Odia thali is a symphony — rice with dal, saga bhaja, amba khatta, machha jhola and sweets. Each item is balanced: sour, sweet, spicy, bitter. A meal as philosophy.</p>
+        <div class="triptych-tags">
+          <span>56 Bhog items</span><span>Sattvic cooking</span><span>Mustard oil base</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLOTHING -->
+    <div class="triptych-card cloth-card">
+      <div class="triptych-art cloth-art">
+        <div class="weave-pattern">
+          <div class="weave-row"><div class="weave-cell wc-0"></div><div class="weave-cell wc-1"></div><div class="weave-cell wc-2"></div><div class="weave-cell wc-3"></div><div class="weave-cell wc-4"></div><div class="weave-cell wc-5"></div></div>
+          <div class="weave-row"><div class="weave-cell wc-alt-0"></div><div class="weave-cell wc-alt-1"></div><div class="weave-cell wc-alt-2"></div><div class="weave-cell wc-alt-3"></div><div class="weave-cell wc-alt-4"></div><div class="weave-cell wc-alt-5"></div></div>
+          <div class="weave-row"><div class="weave-cell wc-0"></div><div class="weave-cell wc-1"></div><div class="weave-cell wc-2"></div><div class="weave-cell wc-3"></div><div class="weave-cell wc-4"></div><div class="weave-cell wc-5"></div></div>
+          <div class="weave-row"><div class="weave-cell wc-alt-0"></div><div class="weave-cell wc-alt-1"></div><div class="weave-cell wc-alt-2"></div><div class="weave-cell wc-alt-3"></div><div class="weave-cell wc-alt-4"></div><div class="weave-cell wc-alt-5"></div></div>
+        </div>
+        <div class="cloth-emoji">🧵</div>
+      </div>
+      <div class="triptych-content">
+        <h3 class="triptych-title">Sambalpuri Ikat<br><span class="odia-script">ସମ୍ବଲପୁରୀ ଶାଢ଼ି</span></h3>
+        <p class="triptych-desc">The Sambalpuri saree and Bomkai silk are Odisha's textile pride — tie-dyed before weaving, their intricate ikkat patterns depict temple wheels, conch shells and lotus flowers.</p>
+        <div class="triptych-tags">
+          <span>GI Tagged</span><span>Ikkat weave</span><span>Temple motifs</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FESTIVE PITHAS -->
+<section class="section" style="background: var(--cream-deep); padding: 3rem 2rem;">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Utsava Khaadya · ଉତ୍ସବ ଖାଦ୍ୟ</p>
+      <h2 class="section-title">Festive Pithas</h2>
+    </div>
+    <a href="/shop?category=pitha" class="section-link">See all Pithas →</a>
+  </div>
+  <div class="product-grid">
+    {{#each festive}}
+    <div class="product-card">
+      <div class="product-img" style="background: {{this.bgColor}}">
+        <span class="product-emoji">{{this.emoji}}</span>
+      </div>
+      <div class="product-body">
+        <p class="product-category">{{this.categoryLabel}}</p>
+        <h3 class="product-name">{{this.name}}</h3>
+        <p class="product-odia-name">{{this.odiaName}}</p>
+        <p class="product-desc">{{this.desc}}</p>
+        <p class="product-story">🙏 {{this.story}}</p>
+        <div class="product-footer">
+          <div>
+            <span class="product-price">₹{{this.price}}</span>
+            <span class="product-unit">/ {{this.unit}}</span>
+          </div>
+          <button class="add-btn"
+            data-id="{{this.id}}"
+            data-name="{{this.name}}"
+            data-price="{{this.price}}">
+            + Add
+          </button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</section>
+
+<!-- STORY BAND -->
+<section class="story-band">
+  <div class="story-inner">
+    <div class="story-text">
+      <p class="section-eyebrow" style="color: var(--turmeric-light)">Amara Kahani · ଆମର କାହାଣୀ</p>
+      <h2 class="story-title">Preserving flavours that <em>grandmothers</em> still remember</h2>
+      <p class="story-body">We work directly with artisan families across 18 districts of Odisha — from the coastal kitchens of Puri to the tribal heartland of Koraput. No middlemen, no factories. Just recipes passed down through generations, packed with love.</p>
+      <a href="/our-story" class="btn-outline-light">Read Our Story →</a>
+    </div>
+    <div class="story-stats">
+      <div class="stat-item">
+        <div class="stat-num">40<span class="stat-plus">+</span></div>
+        <div class="stat-label">ପରିବାର · Artisan Families</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">18</div>
+        <div class="stat-label">ଜିଲ୍ଲା · Districts</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">ସଂରକ୍ଷକ · Preservatives</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12k<span class="stat-plus">+</span></div>
+        <div class="stat-label">ଖୁସି ଗ୍ରାହକ · Happy Customers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="section-eyebrow">Sambada · ସମ୍ବାଦ</p>
+  <h2 class="newsletter-title">Stay connected with Odisha</h2>
+  <p class="newsletter-sub">Seasonal pithas, temple festivals, new arrivals — delivered to your inbox.</p>
+  <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+    <input type="email" placeholder="Your email address · ଆପଣଙ୍କ ଇମେଲ" required />
+    <button type="submit" class="btn-primary">Subscribe · ସଦସ୍ୟ ହୁଅନ୍ତୁ</button>
+  </form>
+</section>
