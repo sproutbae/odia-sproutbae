@@ -1,0 +1,254 @@
+// SproutBae - Wholesale Billing App
+// Database: PostgreSQL via Railway
+// ORM: Prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users & Auth ────────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  invoices  Invoice[]
+  payments  Payment[]
+}
+
+enum Role {
+  ADMIN
+  ACCOUNTANT
+  STAFF
+}
+
+// ─── Business Settings ────────────────────────────────────────
+model BusinessSettings {
+  id           String  @id @default(cuid())
+  name         String  @default("SproutBae")
+  gstin        String?
+  address      String?
+  city         String?
+  state        String?
+  pincode      String?
+  phone        String?
+  email        String?
+  bankName     String?
+  accountNo    String?
+  ifsc         String?
+  upiId        String?
+  invoicePrefix String @default("INV")
+  nextInvoiceNo Int    @default(1)
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── Customers ────────────────────────────────────────────────
+model Customer {
+  id          String   @id @default(cuid())
+  name        String
+  contactName String?
+  phone       String?
+  email       String?
+  gstin       String?
+  address     String?
+  city        String?
+  state       String?
+  pincode     String?
+  creditLimit Float    @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  invoices    Invoice[]
+  payments    Payment[]
+
+  @@index([name])
+  @@index([phone])
+}
+
+// ─── Products / SKUs ──────────────────────────────────────────
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  sku         String?  @unique
+  hsnCode     String?
+  unit        String   @default("PCS")
+  description String?
+  category    String?
+  costPrice   Float    @default(0)
+  salePrice   Float    @default(0)
+  gstRate     Float    @default(18)  // 0, 5, 12, 18, 28
+  stockQty    Float    @default(0)
+  minStockQty Float    @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  invoiceItems InvoiceItem[]
+  stockMovements StockMovement[]
+
+  @@index([name])
+  @@index([sku])
+}
+
+// ─── Invoices ─────────────────────────────────────────────────
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNo     String        @unique
+  type          InvoiceType   @default(TAX_INVOICE)
+  status        InvoiceStatus @default(DRAFT)
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  createdById   String
+  createdBy     User          @relation(fields: [createdById], references: [id])
+  invoiceDate   DateTime      @default(now())
+  dueDate       DateTime?
+  
+  // GST fields
+  gstType       GSTType       @default(IGST)  // IGST for inter-state, CGST+SGST for intra
+  placeOfSupply String?
+  
+  // Amounts
+  subtotal      Float         @default(0)
+  discount      Float         @default(0)
+  discountType  DiscountType  @default(PERCENT)
+  cgst          Float         @default(0)
+  sgst          Float         @default(0)
+  igst          Float         @default(0)
+  totalTax      Float         @default(0)
+  grandTotal    Float         @default(0)
+  amountPaid    Float         @default(0)
+  balanceDue    Float         @default(0)
+  
+  notes         String?
+  terms         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  items         InvoiceItem[]
+  payments      Payment[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([invoiceDate])
+}
+
+enum InvoiceType {
+  TAX_INVOICE
+  PROFORMA
+  DELIVERY_CHALLAN
+  CREDIT_NOTE
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PARTIAL
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum GSTType {
+  IGST
+  CGST_SGST
+}
+
+enum DiscountType {
+  PERCENT
+  AMOUNT
+}
+
+// ─── Invoice Line Items ───────────────────────────────────────
+model InvoiceItem {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id])
+  
+  description String
+  hsnCode     String?
+  qty         Float
+  unit        String   @default("PCS")
+  rate        Float
+  discount    Float    @default(0)
+  gstRate     Float    @default(18)
+  taxableAmt  Float
+  cgst        Float    @default(0)
+  sgst        Float    @default(0)
+  igst        Float    @default(0)
+  totalAmt    Float
+
+  @@index([invoiceId])
+}
+
+// ─── Payments ─────────────────────────────────────────────────
+model Payment {
+  id            String        @id @default(cuid())
+  invoiceId     String
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id])
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  receivedById  String
+  receivedBy    User          @relation(fields: [receivedById], references: [id])
+  amount        Float
+  paymentDate   DateTime      @default(now())
+  mode          PaymentMode   @default(CASH)
+  reference     String?       // UPI txn id / cheque no / bank ref
+  notes         String?
+  createdAt     DateTime      @default(now())
+
+  @@index([invoiceId])
+  @@index([customerId])
+}
+
+enum PaymentMode {
+  CASH
+  UPI
+  BANK_TRANSFER
+  CHEQUE
+  CARD
+}
+
+// ─── Stock Movements ──────────────────────────────────────────
+model StockMovement {
+  id          String        @id @default(cuid())
+  productId   String
+  product     Product       @relation(fields: [productId], references: [id])
+  type        MovementType
+  qty         Float
+  balanceQty  Float
+  reference   String?       // invoice no / purchase no
+  notes       String?
+  createdAt   DateTime      @default(now())
+
+  @@index([productId])
+}
+
+enum MovementType {
+  PURCHASE_IN
+  SALE_OUT
+  ADJUSTMENT
+  RETURN_IN
+}
+
+// ─── Expenses ─────────────────────────────────────────────────
+model Expense {
+  id          String   @id @default(cuid())
+  category    String
+  description String?
+  amount      Float
+  date        DateTime @default(now())
+  mode        PaymentMode @default(CASH)
+  createdAt   DateTime @default(now())
+}
